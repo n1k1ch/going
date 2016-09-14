@@ -37,7 +37,6 @@ func main() {
 	//see print.go: 985
 	arrP := []Person{{"Sub-Zero", 2001}, {"Mileena", 2002}}
 	printSome("arrP", "%q", arrP)
-	//fmt.Printf("*arrP: %q", *arrP)
 
 	i := 2001
 	printSome("i:", "%q", i)
@@ -66,12 +65,21 @@ func main() {
 	printSome("reflect.TypeOf(arr3)", "%q", reflect.TypeOf(arr3))
 	printSome("reflect.TypeOf(slice)", "%q", reflect.TypeOf(slice))
 
+	a,b,c := multipleReturn()
+	printSome("multipleReturn", "%q", a, b, c)
+	printSome("multipleReturn, a", "%d", a)
+	printSome("multipleReturn, b", "%s", b)
+	printSome("multipleReturn, c", "%s", c)
+	printSome("reflect.TypeOf(c)", "%q", reflect.TypeOf(a))
+	printSome("reflect.TypeOf(c)", "%q", reflect.TypeOf(b))
+	printSome("reflect.TypeOf(c)", "%q", reflect.TypeOf(c))
+
 }
 
 var count int = 0
 var printer = color.New(color.BgHiCyan, color.FgBlack).PrintfFunc()
 
-func printSome(pad string, f string, s interface{}) {
+func printSome(pad string, f string, s ...interface{}) {
 	if isatty.IsTerminal(os.Stdout.Fd()) && count%2 == 0 {
 		printer("%-47s", pad)
 		printer(":\t")
@@ -89,4 +97,8 @@ func printSome(pad string, f string, s interface{}) {
 type Person struct {
 	name string
 	age  int
+}
+
+func multipleReturn()(int, string, float32) {
+	return 1, "xx", 6.77
 }
